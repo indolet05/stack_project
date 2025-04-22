@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}500 - Ошибка сервера | Cafe Shop{% endblock %}
+{% block meta_description %}Произошла внутренняя ошибка сервера. Пожалуйста, попробуйте позже.{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <img src="{% static 'images/500.png' %}" alt="" aria-hidden="true" width="200" height="200">
+        <h1>500 - Ошибка сервера</h1>
+        <p>Приносим извинения, произошла внутренняя ошибка сервера.</p>
+        <p>Наша команда уже работает над решением проблемы.</p>
+        
+        <div class="actions">
+            <a href="{% url 'home' %}" class="button primary animated">
+                Вернуться на главную
+            </a>
+            <a href="mailto:support@cafeshop.example" class="button secondary animated">
+                Связаться с поддержкой
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,470 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* === Основные стили === */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* === Навигация === */
+.navbar {
+    background: linear-gradient(90deg, #28a745, #218838);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin: 0 15px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #d4edda;
+    text-decoration: underline;
+}
+
+/* === Основной контейнер === */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* === Формы === */
+.form-container {
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+    margin: auto;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.form-container:hover {
+    transform: scale(1.02);
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+.form-container input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #28a745, #218838);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.form-container button:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+}
+
+/* === Сообщения === */
+.messages {
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* === Меню === */
+.menu-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.menu-title {
+    font-size: 28px;
+    color: #333;
+    margin: 0;
+}
+
+.menu-subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+.menu-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.menu-item {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item img {
+    width: 100%;
+    border-radius: 12px;
+    max-height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover img {
+    transform: scale(1.05);
+}
+
+.menu-item-info h2 {
+    margin: 15px 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.menu-item-info p {
+    color: #555;
+    font-size: 16px;
+}
+
+.menu-item-tags {
+    color: #666;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.menu-item-category {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.order-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #28a745, #218838);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s;
+    cursor: pointer;
+}
+
+.order-btn:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+}
+
+.not-available {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.empty-menu {
+    color: #666;
+    text-align: center;
+    padding: 20px;
+}
+
+/* === Фильтры === */
+.menu-filters {
+    margin: 20px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.filter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 200px;
+    transition: border 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+select:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+/* === Пагинация === */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination span {
+    color: #333;
+    font-size: 16px;
+}
+
+/* === Кнопки === */
+.button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #28a745, #218838);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.button:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+}
+
+.button.secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.button.secondary:hover {
+    background: #5a6268;
+    transform: scale(1.05);
+}
+
+/* === Подвал === */
+.footer {
+    text-align: center;
+    padding: 25px;
+    background: #333;
+    color: white;
+    font-size: 16px;
+    margin-top: 50px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* === Страница входа === */
+.login-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    background: linear-gradient(90deg, #28a745, #218838);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #28a745, #218838);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.login-button:hover {
+    background: #1e7e34;
+    transform: scale(1.05);
+}
+
+/* === Ссылка на регистрацию === */
+.register-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.register-link a {
+    color: #28a745;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* === Главная страница === */
+.home-container {
+    text-align: center;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background: #fff8e1;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.home-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.home-title span {
+    color: #e67e22;
+}
+
+.home-subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.home-buttons {
+    margin-bottom: 20px;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+    .menu-container {
+        grid-template-columns: 1fr;
+    }
+
+    .form-container,
+    .login-container {
+        max-width: 100%;
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar li {
+        margin: 10px 0;
+    }
+
+    .filter-form {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+}

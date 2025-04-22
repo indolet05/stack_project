@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Мои заказы - Cafe Shop{% endblock %}
+{% block meta_description %}История ваших заказов в Cafe Shop{% endblock %}
+
+{% block content %}
+<div class="orders-page">
+    <header class="page-header" aria-labelledby="orders-heading">
+        <h1 id="orders-heading">Мои заказы</h1>
+    </header>
+
+    {% if orders %}
+        <div class="orders-list" role="region" aria-live="polite">
+            {% for order in orders %}
+                <details class="order-card" aria-expanded="false">
+                    <summary class="order-summary">
+                        <div class="order-header">
+                            <span class="order-number">Заказ #{{ order.id }}</span>
+                            <span class="order-date">{{ order.created_at|date:"d.m.Y H:i" }}</span>
+                            <span class="order-status {{ order.status }}">{{ order.get_status_display }}</span>
+                            <span class="order-total">{{ order.total_price }} ₽</span>
+                        </div>
+                    </summary>
+
+                    <div class="order-details">
+                        <table class="order-items" aria-label="Состав заказа">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Блюдо</th>
+                                    <th scope="col">Количество</th>
+                                    <th scope="col">Цена</th>
+                                    <th scope="col">Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                    <tr>
+                                        <td data-label="Блюдо">{{ item.menu_item.name }}</td>
+                                        <td data-label="Количество">{{ item.quantity }}</td>
+                                        <td data-label="Цена">{{ item.menu_item.price }} ₽</td>
+                                        <td data-label="Сумма">{{ item.get_subtotal }} ₽</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="3" scope="row">Итого:</th>
+                                    <td data-label="Итого">{{ order.total_price }} ₽</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </details>
+            {% endfor %}
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'menu:menu_list' %}" class="button primary">
+                Сделать новый заказ
+            </a>
+        </div>
+    {% else %}
+        <div class="empty-state" aria-live="polite">
+            <p>У вас пока нет заказов.</p>
+            <a href="{% url 'menu:menu_list' %}" class="button primary">
+                Сделать первый заказ
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

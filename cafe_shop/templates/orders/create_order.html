@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Оформление заказа - Cafe Shop{% endblock %}
+{% block meta_description %}Оформление вашего заказа в Cafe Shop. Проверьте состав перед подтверждением.{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Оформление заказа</h1>
+
+    {% if cart_items %}
+    <section aria-labelledby="order-summary-heading">
+        <h2 id="order-summary-heading" class="visually-hidden">Сводка заказа</h2>
+        
+        <div class="order-table-wrapper">
+            <table class="order-table" aria-describedby="order-summary-heading">
+                <thead>
+                    <tr>
+                        <th scope="col">Блюдо</th>
+                        <th scope="col">Количество</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Подитог</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td data-label="Блюдо">{{ item.menu_item.name }}</td>
+                        <td data-label="Количество">{{ item.quantity }}</td>
+                        <td data-label="Цена">{{ item.menu_item.price }} ₽</td>
+                        <td data-label="Подитог">{{ item.subtotal }} ₽</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" scope="row">Итого:</th>
+                        <td data-label="Итого"><strong>{{ total }} ₽</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <form method="post" class="order-form">
+            {% csrf_token %}
+            <fieldset class="form-actions">
+                <legend class="visually-hidden">Действия с заказом</legend>
+                <button type="submit" class="button primary animated">
+                    Подтвердить заказ
+                </button>
+                <a href="{% url 'menu:menu_list' %}" class="button secondary animated">
+                    Вернуться к меню
+                </a>
+            </fieldset>
+        </form>
+    </section>
+    {% else %}
+    <div class="empty-state" aria-live="polite">
+        <p>Корзина пуста.</p>
+        <a href="{% url 'menu:menu_list' %}" class="button primary animated">
+            Вернуться к меню
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}404 - Страница не найдена | Cafe Shop{% endblock %}
+{% block meta_description %}Запрошенная страница не существует. Вернитесь на главную или воспользуйтесь меню.{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <img src="{% static 'images/404.png' %}" alt="" aria-hidden="true" width="200" height="200">
+        <h1>404 - Страница не найдена</h1>
+        <p>К сожалению, запрошенная страница не существует.</p>
+        <div class="actions">
+            <a href="{% url 'home' %}" class="button primary animated">
+                Вернуться на главную
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

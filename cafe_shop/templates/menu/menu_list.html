@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Меню - Cafe Shop{% endblock %}
+{% block meta_description %}Выберите из нашего меню свежие блюда и напитки{% endblock %}
+
+{% block content %}
+<div class="menu-page">
+    <!-- Hero Section -->
+    <section class="menu-hero" aria-labelledby="menu-heading">
+        <div class="container text-center text-white">
+            <h1 id="menu-heading" class="display-4 fw-bold mb-3">Наше меню</h1>
+            <p class="lead mb-4">Откройте для себя вкус наших лучших блюд и напитков</p>
+        </div>
+    </section>
+
+    <!-- В разделе Filters Section -->
+<section class="filters-section py-4 bg-light">
+    <div class="container">
+        <form method="get" action="{% url 'menu:menu_list' %}" id="search-form">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <div class="search-box position-relative">
+                        <i class="fas fa-search position-absolute"></i>
+                        <input type="text" id="search" name="search" 
+                               class="form-control ps-4" 
+                               placeholder="Поиск блюд..." 
+                               value="{{ request.GET.search }}"
+                               aria-label="Поиск по меню">
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <select id="category" name="category" class="form-select">
+                        <option value="">Все категории</option>
+                        {% for category in categories %}
+                            <option value="{{ category.slug }}"
+                                    {% if request.GET.category == category.slug %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="col-md-4 d-flex">
+                    <button type="submit" class="btn btn-primary me-2 flex-grow-1">
+                        <i class="fas fa-filter me-1"></i> Применить
+                    </button>
+                    {% if request.GET.search or request.GET.category %}
+                        <a href="{% url 'menu:menu_list' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-1"></i> Сбросить
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+    <!-- Menu Items Section -->
+    <section class="menu-items-section py-5">
+        <div class="container">
+            {% if menu_items %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for item in menu_items %}
+                        <div class="col">
+                            <div class="card menu-item-card h-100 border-0 shadow-sm">
+                                <!-- Badges for special items -->
+                                {% if item.is_new %}
+                                    <span class="badge bg-success position-absolute top-0 end-0 m-2">Новинка</span>
+                                {% endif %}
+                                {% if not item.is_available %}
+                                    <span class="badge bg-danger position-absolute top-0 start-0 m-2">Нет в наличии</span>
+                                {% endif %}
+                                
+                                <!-- Item Image -->
+                                <div class="menu-item-img-container">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" 
+                                             class="card-img-top" 
+                                             alt="{{ item.name }}"
+                                             loading="lazy">
+                                    {% else %}
+                                        <div class="menu-item-placeholder">
+                                            <i class="fas fa-utensils"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h3 class="h5 card-title mb-0">{{ item.name }}</h3>
+                                        <span class="badge bg-light text-dark">
+                                            {{ item.category.name }}
+                                        </span>
+                                    </div>
+                                    
+                                    <p class="card-text text-muted mb-3">
+                                        {{ item.description|truncatewords:15 }}
+                                    </p>
+                                    
+                                    <!-- Tags -->
+                                    {% if item.tags.all %}
+                                        <div class="tags mb-3">
+                                            {% for tag in item.tags.all %}
+                                                <span class="badge bg-light text-dark me-1 mb-1">
+                                                    {{ tag.name }}
+                                                </span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Card Footer -->
+                                <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                                    <span class="price fw-bold text-primary">
+                                        {{ item.price }} ₽
+                                    </span>
+                                    
+                                    {% if item.is_available %}
+                                        <button class="btn btn-sm btn-outline-primary add-to-cart" 
+                                                data-item-id="{{ item.id }}"
+                                                aria-label="Добавить {{ item.name }} в корзину">
+                                            <i class="fas fa-plus me-1"></i> В корзину
+                                        </button>
+                                    {% else %}
+                                        <span class="text-muted small">Недоступно</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                {% if is_paginated %}
+                    <nav class="mt-5" aria-label="Навигация по страницам">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" 
+                                       href="?page={{ page_obj.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                       aria-label="Предыдущая">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" 
+                                           href="?page={{ num }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                            {{ num }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" 
+                                       href="?page={{ page_obj.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                       aria-label="Следующая">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            {% else %}
+                <!-- Empty State -->
+                <div class="empty-state text-center py-5">
+                    <div class="empty-state-icon mb-4">
+                        <i class="fas fa-utensils fa-4x text-muted"></i>
+                    </div>
+                    <h3 class="h4 mb-3">По вашему запросу ничего не найдено</h3>
+                    <p class="text-muted mb-4">Попробуйте изменить параметры поиска или сбросить фильтры</p>
+                    <a href="{% url 'menu:menu_list' %}" class="btn btn-primary">
+                        <i class="fas fa-undo me-1"></i> Показать все блюда
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

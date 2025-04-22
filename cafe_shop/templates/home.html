@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Главная - Cafe Shop{% endblock %}
+{% block meta_description %}Добро пожаловать в Cafe Shop - лучшее место для кофе и выпечки{% endblock %}
+
+{% block content %}
+<section class="hero-section" aria-labelledby="main-heading">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content text-center text-white">
+        <h1 id="main-heading" class="display-3 fw-bold mb-4">
+            {% if user.is_authenticated %}
+                Добро пожаловать, {{ user.username }}!
+            {% else %}
+                Добро пожаловать в Cafe Shop
+            {% endif %}
+        </h1>
+        <p class="lead mb-5">Попробуйте наши авторские блюда и напитки</p>
+        
+        <div class="cta-buttons">
+            <a href="{% url 'menu:menu_list' %}" class="btn btn-primary btn-lg px-4 me-3" aria-label="Посмотреть меню">
+                <i class="fas fa-utensils me-2"></i> Посмотреть меню
+            </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'orders:order_list' %}" class="btn btn-outline-light btn-lg px-4" aria-label="Мои заказы">
+                    <i class="fas fa-receipt me-2"></i> Мои заказы
+                </a>
+            {% else %}
+                <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-lg px-4" aria-label="Войти в аккаунт">
+                    <i class="fas fa-sign-in-alt me-2"></i> Войти
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light" aria-labelledby="features-heading">
+    <div class="container">
+        <h2 id="features-heading" class="text-center mb-5">Почему выбирают нас</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-coffee fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Свежий кофе</h3>
+                        <p class="mb-0">Обжарка собственного производства из отборных зерен</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-bread-slice fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Домашняя кухня</h3>
+                        <p class="mb-0">Блюда приготовленные по семейным рецептам с любовью</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-truck fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="h4 mb-3">Быстрая доставка</h3>
+                        <p class="mb-0">Привезем ваш заказ в течение 30 минут или кофе бесплатно</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white" aria-labelledby="special-offer-heading">
+    <div class="container">
+        <h2 id="special-offer-heading" class="text-center mb-5">Специальные предложения</h2>
+        <div class="row g-4">
+            {% for item in featured_items %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm overflow-hidden">
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-utensils fa-3x text-white"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h3 class="h5 card-title">{{ item.name }}</h3>
+                        <p class="card-text">{{ item.description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">{{ item.price }} ₽</span>
+                            <a href="{% url 'menu:menu_item_detail' item.slug %}" class="btn btn-sm btn-outline-primary">
+                                Подробнее
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
